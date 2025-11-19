@@ -1,7 +1,7 @@
 # pnc-rs
 Fast multithreaded Rust-implementation of PNC (Parallel Neighbourhood Correlation). EXPERIMENTAL.
 
-Based on [rust-py](https://github.com/yrin/pnc-py), the PNC variant of the NC [Neighbourhood Correlation](https://www.neighborhoodcorrelation.org/) algorithm [1]. The PNC algorithm is described in my M.Sc. thesis [2].
+Based on [pnc-py](https://github.com/yrin/pnc-py), the PNC variant of the NC [Neighbourhood Correlation](https://www.neighborhoodcorrelation.org/) algorithm [1]. The PNC algorithm is described in my M.Sc. thesis [2].
 Its time complexity is better than [snc](https://github.com/arvestad/snc/) and [snc-cpp](https://github.com/arvestad/fast-neighborhood-correlation) by a factor of `log(m)`, where `m` is the number of alignments to the reference database per query sequence (assuming an equal number of alignments per query). See my thesis for details.
 
 
@@ -21,9 +21,9 @@ CPU: 8 cores, 16 threads.
 
 (_Aligner running time not included. `snc-py` progresses consistently linearly during its main computation step, so the estimated time is a reliable lower bound for the actual time required._)
 
-Peak memory usage for `pnc-rs`on the subsampled UniRef50 dataset was about 58 GB. The dominating term is the 4+4+4 bytes (2x query id u32's and a float32) used for storing the cross-terms (query_x_score * query_y_score) needed to complete the final NC calculation step.
-
 "13 proteomes" refers to: _E. coli, S. cerevisiae, M. musculus, D. melanogaster, B. subtilis, R. norvegicus, H. sapiens, A. thaliana, D. rerio, C. elegans, D. discoideum, B. taurus,_ and _O. sativa_; downloaded from [UNIPROT](https://www.uniprot.org/proteomes?query=proteome_type%3A1) (2024).
+
+Peak memory usage for `pnc-rs`on the subsampled UniRef50 dataset was about 58 GB. The dominating term is the 4+4+4 bytes (2x query id u32's and a float32) used for storing the cross-terms (query_x_score * query_y_score) needed to complete the final NC calculation step.
 
 The outputs of all 4 tools were sorted and compared (for HSA+MMU). Each entry deviated from the mean by at most 0.00075 [the valid range of NC-scores is 0-1], which is reasonable due to the number of significant digits and usage of 32-bit floats during the calculations in both PNC versions.
 
